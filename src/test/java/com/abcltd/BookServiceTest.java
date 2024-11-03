@@ -3,6 +3,7 @@ package com.abcltd;
 
 import com.abcltd.dto.BookDto;
 import com.abcltd.dto.GenericResponse;
+import com.abcltd.dto.GetEntitiesResponse;
 import com.abcltd.dto.Status;
 import com.abcltd.model.Book;
 import com.abcltd.repository.BookRepository;
@@ -44,7 +45,7 @@ public class BookServiceTest {
 
     @BeforeEach
     public void setUp() {
-        bookDto = new BookDto("Tittle2", "Bill", 2029 );
+        bookDto = new BookDto("Tittle2", "Bill", 2029,true );
         book = new Book();
         errors = mock(Errors.class);
     }
@@ -70,6 +71,7 @@ public class BookServiceTest {
                 .thenReturn(optionalBook);
 
         ResponseEntity<Optional<Book>> result = bookService.getOne(bookId);
+        System.out.println("one book>>>"+result);
 
         assertTrue(result.getBody().isPresent());
         verify(genericService, times(1)).getOne(anyString(), any(BookRepository.class));
@@ -79,9 +81,9 @@ public class BookServiceTest {
     public void testGetAllBooks() {
         when(bookRepository.findAll()).thenReturn(List.of(book));
 
-        List<Book> result = bookService.getAll(0, 10, "id", "asc");
+        ResponseEntity<GetEntitiesResponse<Book>> result = bookService.getAll(0, 10, "id", "asc");
 
-        assertEquals(1, result.size());
+        assertEquals(1, result.getBody().entities().size());
         verify(bookRepository, times(1)).findAll();
     }
 

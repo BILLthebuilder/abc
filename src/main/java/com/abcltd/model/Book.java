@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-//@SQLDelete(sql = "UPDATE tbbooks SET status=false WHERE id=?")
+@SQLDelete(sql = "UPDATE book SET status=false WHERE id=?")
 public class Book implements Serializable,ParentEntity {
     @Id
     @GeneratedValue
@@ -26,7 +27,7 @@ public class Book implements Serializable,ParentEntity {
 
     private String title;
     private String author;
-    private int yearz;
+    private int years;
 
     @CreationTimestamp
     private Date dateCreated;
@@ -34,8 +35,10 @@ public class Book implements Serializable,ParentEntity {
     @UpdateTimestamp
     private Date dateUpdated;
 
+    private boolean status;
+
     @Override
     public boolean getStatus() {
-        return false;
+        return this.status;
     }
 }

@@ -3,6 +3,7 @@ package com.abcltd.controller;
 
 import com.abcltd.dto.BookDto;
 import com.abcltd.dto.GenericResponse;
+import com.abcltd.dto.GetEntitiesResponse;
 import com.abcltd.model.Book;
 import com.abcltd.service.BookService;
 import jakarta.validation.Valid;
@@ -27,10 +28,10 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getAll(@RequestParam(name = "page", defaultValue = "0") int page,
-                             @RequestParam(name = "size", defaultValue = "10") int size,
-                             @RequestParam(name = "sort", required = false) String sortBy,
-                             @RequestParam(name = "order", defaultValue = "asc") String sortOrder) {
+    public ResponseEntity<GetEntitiesResponse<Book>> getAll(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                         @RequestParam(name = "size", defaultValue = "10") int size,
+                                                         @RequestParam(name = "sort", required = false) String sortBy,
+                                                         @RequestParam(name = "order", defaultValue = "asc") String sortOrder) {
         return bookService.getAll(page, size,sortBy,sortOrder);
     }
     @GetMapping("/{id}")

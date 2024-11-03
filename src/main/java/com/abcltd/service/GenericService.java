@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -115,7 +116,11 @@ public class GenericService {
         Pageable pageable = createPageable(page, size,sortBy, sortOrder);
         try {
             entities = repository.findAll(pageable);
-            filteredEntities = new ArrayList<>(entities.getContent());
+            filteredEntities = entities
+                    .getContent()
+                    .stream()
+                    .filter(E::getStatus)
+                    .collect(Collectors.toList());
 
             response = new GetEntitiesResponse<>(Status.SUCCESS, filteredEntities);
             return new ResponseEntity<>(response, HttpStatus.OK);

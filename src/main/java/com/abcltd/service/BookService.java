@@ -2,6 +2,7 @@ package com.abcltd.service;
 
 import com.abcltd.dto.BookDto;
 import com.abcltd.dto.GenericResponse;
+import com.abcltd.dto.GetEntitiesResponse;
 import com.abcltd.model.Book;
 import com.abcltd.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,9 @@ public class BookService {
         return genericService.getOne(id, this.bookRepository);
     }
 
-    public List<Book> getAll(int page, int size, String sortBy, String sortOrder) {
-        //return genericService.getAll(bookRepository,page, size,sortBy,sortOrder);
-        return  bookRepository.findAll();
+    public ResponseEntity<GetEntitiesResponse<Book>> getAll(int page, int size, String sortBy, String sortOrder) {
+        return genericService.getAll(bookRepository,page, size,sortBy,sortOrder);
+        //return  bookRepository.findAll();
     }
 
     public ResponseEntity<GenericResponse> update(String id, BookDto request, Errors errors) {

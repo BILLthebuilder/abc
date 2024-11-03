@@ -8,7 +8,8 @@ public record BookDto(
         @NotEmpty(message = "author cannot be blank")
         String author,
 
-        Integer yearz
+        Integer years,
+        boolean status
 
 ) {
 }

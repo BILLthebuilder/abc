@@ -40,7 +40,7 @@ class BooksTest {
     @Test
     @Order(1)
     void bookShouldBeCreated() throws Exception {
-        BookDto bookRequest = new BookDto("Tittle", "Bill", 2026 );
+        BookDto bookRequest = new BookDto("Tittle", "Bill", 2026 ,true);
 
         mockMvc.perform(post("/api/v1/books").with(httpBasic("user","user@123"))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ class BooksTest {
     @Order(4)
     void userShouldUpdate() throws Exception {
         var book = repository.findSingleRecord();
-        BookDto bookRequest = new BookDto("Tittle2", "Bill", 2029 );
+        BookDto bookRequest = new BookDto("Tittle2", "Bill", 2029 ,true);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/books/{id}", book.getId()).with(httpBasic("user","user@123"))
                         .contentType(MediaType.APPLICATION_JSON)
